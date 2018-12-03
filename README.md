@@ -1,0 +1,2 @@
+Sendify is an open source api that allows courier companies to create company portals on the go without much hustle.
+Written in Python, sendify comes with full functionality to allow companies to allow for admin priviledges as well as user priviledges.
