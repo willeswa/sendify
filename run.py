@@ -1,6 +1,5 @@
 # local imports
 import os
-from config import app_config
 from app import create_app
 
 config_name = os.getenv('FLASK_ENV')

@@ -3,7 +3,7 @@
 
 class Config:
     """ This class defines common variables to all environment """
-    pass
+    SECRET_KEY = 'SOME SUPER SECRET'
 
 
 class TestConfig(Config):
@@ -13,7 +13,7 @@ class TestConfig(Config):
 
 class DevelopmentConfig(Config):
     """ This class defines variables for the development environment """
-    DEBUG=False
+    DEBUG = True
 
 
 class ProductionConfig(Config):
