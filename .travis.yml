@@ -9,10 +9,10 @@ python:
 install:
   - pip install -r requirements.txt
   - pip install coveralls codecov
-  - pip install pytest
+  - pip install nose
 
 script:
-  - pytest --with-coverage --cover-inclusive --cover-package=app
+  - nosetests --with-coverage --cover-inclusive --cover-package=app
 
 after_success:
   - coveralls
