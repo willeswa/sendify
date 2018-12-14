@@ -2,7 +2,7 @@ import os
 
 # Global imports
 from flask import Flask
-from config import app_config
+from app.config import app_config
 from dotenv import load_dotenv
 
 
