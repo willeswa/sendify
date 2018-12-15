@@ -1,0 +1,18 @@
+language: python
+
+python:
+  - 3.6.7
+
+env:
+  - FLASK_ENV='testing'
+
+install:
+  - pip install -r requirements.txt
+  - pip install coveralls codecov
+  - pip install nose
+
+script:
+  - nosetests --with-coverage --cover-inclusive --cover-package=app
+
+after_success:
+  - coveralls
