@@ -11,7 +11,7 @@ class TestParcels(BaseTestClass):
 
     def test_create_parcel(self):
         """ tests the create parcel method """
-        self.result = parcel_models.create_parcel(1, 'Dornish Wine', 32, 'Wanjala',
-                                                  'gwiliez@gmail.com', '30197811', 'Kagwe@gmail.com'
-                                                  'Kibera', 'Kibera', 'Kangemi')
-        self.assertEqual(self.result.status_code, 201)
+        result = parcel_models.create_parcel(1, 'Dornish Wine', 32, 'Wanjala',
+                                             'gwiliez@gmail.com', '30197811', 'Kagwe@gmail.com',
+                                             'Kibera', 'Kangemi')
+        self.assertEqual(result, {'message': 'Successfully created parcel'})
