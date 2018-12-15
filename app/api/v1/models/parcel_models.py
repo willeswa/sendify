@@ -11,6 +11,8 @@ class ParcelModels:
 
     def create_parcel(self, user_id, title, weight, s_name, s_email, r_id_no,
                       r_email, pick_up, destination):
+        """ creates a parcels """
+
         id = len(self.db) + 1
         status = 'in transit'
         parcel = {

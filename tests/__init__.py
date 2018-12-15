@@ -13,4 +13,26 @@ class BaseTestClass(unittest.TestCase):
         self.client = self.app.test_client()
         self.db = []
 
-    
+    parcel = {
+        'user_id': 1,
+        'title': 'Dornish Wine',
+        'weight': 32,
+        's_name': 'Wanjala',
+        's_email': 'gwiliez@gmail.com',
+        'r_id_no': '30197811',
+        'r_email': 'Kagwe@gmail.com',
+        'pick_up': 'Kibera',
+        'destination': 'Kangemi'
+    }
+
+    empty_parcel = {
+        'user_id': 1,
+        'title': '',
+        'weight': 32,
+        's_name': 'Wanjala',
+        's_email': 'gwiliez@gmail.com',
+        'r_id_no': '30197811',
+        'r_email': 'Kagwe@gmail.com',
+        'pick_up': 'Kibera',
+        'destination': 'Kangemi'
+    }
