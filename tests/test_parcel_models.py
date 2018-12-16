@@ -29,3 +29,8 @@ class TestParcels(BaseTestClass):
                                     data=json.dumps(self.empty_parcel),
                                     content_type='application/json')
         self.assertEqual(response.status_code, 400)
+
+    def test_retrieve_parcels(self):
+        """ tests the route that retrieves all parcels """
+        response = self.client.get('/api/v1/parcels')
+        self.assertEqual(response.status_code, 200)

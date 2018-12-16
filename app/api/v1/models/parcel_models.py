@@ -32,3 +32,11 @@ class ParcelModels:
         }
         self.db.append(parcel)
         return {'message': 'Successfully created parcel'}
+
+    def get_all_parcels(self):
+        """ allows users to get all data  """
+        if len(self.db) == 0:
+            return 'No parcels'
+        else:
+            return self.db
+            
