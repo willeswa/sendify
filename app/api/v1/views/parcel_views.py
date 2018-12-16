@@ -61,5 +61,6 @@ class ParcelViews(Resource):
         return response['message'], 201
     
     def get(self):
+        """ allows users to retrieve all data """
         response = self.parcel_models.get_all_parcels()
         return {'message': response}, 200

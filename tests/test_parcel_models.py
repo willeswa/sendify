@@ -33,4 +33,4 @@ class TestParcels(BaseTestClass):
     def test_retrieve_parcels(self):
         """ tests the route that retrieves all parcels """
         response = self.client.get('/api/v1/parcels')
-        self.assertEqual(response.status, 200)
+        self.assertEqual(response.status_code, 200)
