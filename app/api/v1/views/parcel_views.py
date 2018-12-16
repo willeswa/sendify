@@ -59,3 +59,7 @@ class ParcelViews(Resource):
                                                     parcel['pick_up'],
                                                     parcel['destination'])
         return response['message'], 201
+    
+    def get(self):
+        response = self.parcel_models.get_all_parcels()
+        return {'message': response}, 200
