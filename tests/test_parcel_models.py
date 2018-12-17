@@ -52,5 +52,5 @@ class TestParcels(BaseTestClass):
     
     def test_user_specific_method(self):
         """ tests the user specific method """
-        response = parcel_models.user_specific_parcels(1, 1)
-        self.assertEqual(response['user_id'], 1)
+        response = parcel_models.user_specific_parcels(1)
+        self.assertEqual(response[0]['user_id'], 1)
