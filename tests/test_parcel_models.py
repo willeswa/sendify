@@ -49,3 +49,8 @@ class TestParcels(BaseTestClass):
         """ Tests the response when one visits the url to view a parcel """
         response = self.client.get('/api/v1/parcels/1')
         self.assertEqual(response.status_code, 200)
+    
+    def test_user_specific_method(self):
+        """ tests the user specific method """
+        response = parcel_models.user_specific_parcels(1, 1)
+        self.assertEqual(response['user_id'], 1)
