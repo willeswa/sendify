@@ -34,3 +34,8 @@ class TestParcels(BaseTestClass):
         """ tests the route that retrieves all parcels """
         response = self.client.get('/api/v1/parcels')
         self.assertEqual(response.status_code, 200)
+
+    def test_order_details(self):
+        """ tests the order details model """
+        response = parcel_models.view_order_details(1)
+        self.assertEquals(response['parcel_id'], 1)
