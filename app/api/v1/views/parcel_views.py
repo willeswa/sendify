@@ -68,7 +68,7 @@ class ParcelViews(Resource):
 
 class ParcelView(Resource):
     """ This class contains methods to controll specific parcels """
-    
+
     def __init__(self):
         self.db = parcels
         self.parcel_models = ParcelModels()

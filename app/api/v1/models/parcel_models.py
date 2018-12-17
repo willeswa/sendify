@@ -1,6 +1,50 @@
 """ This module holds classes to handle the parcel models methods """
 
-parcels = []
+parcels = [ {
+            "bill": 12915,
+            "current_loc": "Kibera",
+            "destination": "gas",
+            "parcel_id": 1,
+            "pick_up": "Kibera",
+            "r_email": "pwanjala@gmail.com",
+            "r_id_no": "30197811",
+            "s_email": "gwiliez@gmail.com",
+            "s_name": " ",
+            "status": "in transit",
+            "title": "Dornish Wine",
+            "user_id": 2,
+            "weight": 105
+        },
+         {
+            "bill": 12915,
+            "current_loc": "Kibera",
+            "destination": "gas",
+            "parcel_id": 1,
+            "pick_up": "Kibera",
+            "r_email": "pwanjala@gmail.com",
+            "r_id_no": "30197811",
+            "s_email": "gwiliez@gmail.com",
+            "s_name": " ",
+            "status": "in transit",
+            "title": "Dornish Wine",
+            "user_id": 2,
+            "weight": 105
+        },
+         {
+            "bill": 12915,
+            "current_loc": "Kibera",
+            "destination": "gas",
+            "parcel_id": 2,
+            "pick_up": "Kibera",
+            "r_email": "pwanjala@gmail.com",
+            "r_id_no": "30197811",
+            "s_email": "gwiliez@gmail.com",
+            "s_name": " ",
+            "status": "in transit",
+            "title": "Dornish Wine",
+            "user_id": 3,
+            "weight": 105
+        }]
 
 
 class ParcelModels:
@@ -62,5 +106,7 @@ class ParcelModels:
         for parcel in self.db:
             if parcel['user_id'] == user_id:
                 user_parcels.append(parcel)
-                return user_parcels
-        return 'No Parcels by user {}'.format(user_id)
+        if user_parcels:
+            return user_parcels
+        else:
+            return 'No Parcels by user {}'.format(user_id)
