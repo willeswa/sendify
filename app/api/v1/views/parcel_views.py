@@ -59,8 +59,21 @@ class ParcelViews(Resource):
                                                     parcel['pick_up'],
                                                     parcel['destination'])
         return response['message'], 201
-    
+
     def get(self):
         """ allows users to retrieve all data """
         response = self.parcel_models.get_all_parcels()
+        return {'message': response}, 200
+
+
+class ParcelView(Resource):
+    """ This class contains methods to controll specific parcels """
+    
+    def __init__(self):
+        self.db = parcels
+        self.parcel_models = ParcelModels()
+
+    def get(self, parcel_id):
+        """ Control method to get a specific parcel """
+        response = self.parcel_models.view_order_details(parcel_id)
         return {'message': response}, 200

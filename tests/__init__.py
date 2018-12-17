@@ -11,7 +11,21 @@ class BaseTestClass(unittest.TestCase):
         """ Creates the app and passes the client for testing """
         self.app = create_app('testing')
         self.client = self.app.test_client()
-        self.db = []
+        self.db = [ {
+            "bill": 12915,
+            "current_loc": "Kibera",
+            "destination": "gas",
+            "parcel_id": 1,
+            "pick_up": "Kibera",
+            "r_email": "pwanjala@gmail.com",
+            "r_id_no": "30197811",
+            "s_email": "gwiliez@gmail.com",
+            "s_name": " ",
+            "status": "in transit",
+            "title": "Dornish Wine",
+            "user_id": 1,
+            "weight": 105
+        }]
 
     parcel = {
         'user_id': 1,
