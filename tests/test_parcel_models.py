@@ -34,3 +34,18 @@ class TestParcels(BaseTestClass):
         """ tests the route that retrieves all parcels """
         response = self.client.get('/api/v1/parcels')
         self.assertEqual(response.status_code, 200)
+
+    def test_order_details(self):
+        """ tests the order details model """
+        response = parcel_models.view_order_details(1)
+        self.assertEquals(response['parcel_id'], 1)
+
+    def test_non_existent_parcel(self):
+        """ Tests the response for a parcel that doesnt exist """
+        response = parcel_models.check_if_parcel_id_exists(200)
+        self.assertEqual(response, 'No parcel with ID 200')
+
+    def test_views_for_parcel_details(self):
+        """ Tests the response when one visits the url to view a parcel """
+        response = self.client.get('/api/v1/parcels/1')
+        self.assertEqual(response.status_code, 200)

@@ -36,7 +36,22 @@ class ParcelModels:
     def get_all_parcels(self):
         """ allows users to get all data  """
         if len(self.db) == 0:
-            return 'No parcels'
+            return 'You have no existing parcels'
         else:
             return self.db
-            
+
+    def view_order_details(self, parcel_id):
+        """ retrieves a specific parcel """
+        result = self.check_if_parcel_id_exists(parcel_id)
+        return result
+
+    def check_if_parcel_id_exists(self, parcel_id):
+        """ Checks if a parcel with the given parcel id exists """
+        if parcels:
+            for parcel in self.db:
+                if parcel['parcel_id'] == parcel_id:
+                    return parcel
+                else:
+                    return 'No parcel with ID {}'.format(parcel_id)
+        else:
+            return 'No parcel with ID {}'.format(parcel_id)
