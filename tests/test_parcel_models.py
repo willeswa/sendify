@@ -49,3 +49,18 @@ class TestParcels(BaseTestClass):
         """ Tests the response when one visits the url to view a parcel """
         response = self.client.get('/api/v1/parcels/1')
         self.assertEqual(response.status_code, 200)
+
+    def test_user_specific_method(self):
+        """ tests the user specific method """
+        response = parcel_models.user_specific_parcels(1)
+        self.assertEqual(response[0]['user_id'], 1)
+
+    def test_user_specific_view(self):
+        """ tests the response for the specific user view route """
+        response = self.client.get('/api/v1/users/2/parcels')
+        self.assertEqual(response.status_code, 200)
+
+    def test_no_parcel_for_specific_user(self):
+        """ tests the response when there are no parcels for a specific user """
+        response = parcel_models.user_specific_parcels(5)
+        self.assertEqual(response, 'No Parcels by user 5')

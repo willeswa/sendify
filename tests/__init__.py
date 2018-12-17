@@ -23,7 +23,7 @@ class BaseTestClass(unittest.TestCase):
             "s_name": " ",
             "status": "in transit",
             "title": "Dornish Wine",
-            "user_id": 1,
+            "user_id": 2,
             "weight": 105
         }]
 
