@@ -1,51 +1,51 @@
 """ This module holds classes to handle the parcel models methods """
 from flask_restful import abort
 
-parcels = [ {
-            "bill": 12915,
-            "current_loc": "Kibera",
-            "destination": "gas",
-            "parcel_id": 1,
-            "pick_up": "Kibera",
-            "r_email": "pwanjala@gmail.com",
-            "r_id_no": "30197811",
-            "s_email": "gwiliez@gmail.com",
-            "s_name": " ",
-            "status": "in transit",
-            "title": "Dornish Wine",
-            "user_id": 2,
-            "weight": 105
-        },
-         {
-            "bill": 12915,
-            "current_loc": "Kibera",
-            "destination": "gas",
-            "parcel_id": 1,
-            "pick_up": "Kibera",
-            "r_email": "pwanjala@gmail.com",
-            "r_id_no": "30197811",
-            "s_email": "gwiliez@gmail.com",
-            "s_name": " ",
-            "status": "in transit",
-            "title": "Dornish Wine",
-            "user_id": 2,
-            "weight": 105
-        },
-         {
-            "bill": 12915,
-            "current_loc": "Kibera",
-            "destination": "gas",
-            "parcel_id": 2,
-            "pick_up": "Kibera",
-            "r_email": "pwanjala@gmail.com",
-            "r_id_no": "30197811",
-            "s_email": "gwiliez@gmail.com",
-            "s_name": " ",
-            "status": "in transit",
-            "title": "Dornish Wine",
-            "user_id": 3,
-            "weight": 105
-        }]
+parcels = [{
+    "bill": 12915,
+    "current_loc": "Kibera",
+    "destination": "gas",
+    "parcel_id": 1,
+    "pick_up": "Kibera",
+    "r_email": "pwanjala@gmail.com",
+    "r_id_no": "30197811",
+    "s_email": "gwiliez@gmail.com",
+    "s_name": " ",
+    "status": "In transit",
+    "title": "Dornish Wine",
+    "user_id": 2,
+    "weight": 105
+},
+    {
+    "bill": 12915,
+    "current_loc": "Kibera",
+    "destination": "gas",
+    "parcel_id": 2,
+    "pick_up": "Kibera",
+    "r_email": "pwanjala@gmail.com",
+    "r_id_no": "30197811",
+    "s_email": "gwiliez@gmail.com",
+    "s_name": " ",
+    "status": "Canceled",
+    "title": "Dornish Wine",
+    "user_id": 2,
+    "weight": 105
+},
+    {
+    "bill": 12915,
+    "current_loc": "Kibera",
+    "destination": "gas",
+    "parcel_id": 3,
+    "pick_up": "Kibera",
+    "r_email": "pwanjala@gmail.com",
+    "r_id_no": "30197811",
+    "s_email": "gwiliez@gmail.com",
+    "s_name": " ",
+    "status": "Delivered",
+    "title": "Dornish Wine",
+    "user_id": 3,
+    "weight": 105
+}]
 
 
 class ParcelModels:
@@ -59,7 +59,7 @@ class ParcelModels:
         """ creates a parcels """
 
         id = len(self.db) + 1
-        status = 'in transit'
+        status = 'in transit'.capitalize()
         parcel = {
             'parcel_id': id,
             'title': title,
@@ -99,7 +99,7 @@ class ParcelModels:
             if parcel['parcel_id'] == parcel_id:
                 return parcel
 
-        return 'No parcel with ID {}'.format(parcel_id)
+        abort(404, message='Parcel with ID {} does not exist'.format(parcel_id))
 
     def user_specific_parcels(self, user_id):
         """ Retrieves parcels that are for a specific user """
@@ -111,13 +111,14 @@ class ParcelModels:
             return user_parcels
         else:
             return 'No Parcels by user {}'.format(user_id)
-        
+
     def cancel_parcel(self, parcel_id):
         result = self.view_order_details(parcel_id)
-        if result['status'] == 'In Transit'.lower():
-            result['status'] == 'Canceled'.lower()
-            return 'Successfully canceled parcel {}'.lower().format(parcel_id)
-        elif result['status'] == 'Delivered'.lower():
+        if result['status'] == 'In transit':
+            result['status'] = 'Canceled'
+            print(result)
+            return 'Successfully canceled parcel {}'.format(parcel_id)
+        elif result['status'] == 'Delivered':
             return 'This parcel is already delivered, it cannot be canceled'
         else:
             return 'The parcel is already canceled'
