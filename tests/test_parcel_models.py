@@ -1,5 +1,6 @@
 """ This module holds the classes to test parcels models and views """
 import json
+from flask_restful import abort
 from app.api.v1.models.parcel_models import ParcelModels
 from tests import BaseTestClass
 
@@ -40,11 +41,6 @@ class TestParcels(BaseTestClass):
         response = parcel_models.view_order_details(1)
         self.assertEquals(response['parcel_id'], 1)
 
-    def test_non_existent_parcel(self):
-        """ Tests the response for a parcel that doesnt exist """
-        response = parcel_models.check_if_parcel_id_exists(200)
-        self.assertEqual(response, 'No parcel with ID 200')
-
     def test_views_for_parcel_details(self):
         """ Tests the response when one visits the url to view a parcel """
         response = self.client.get('/api/v1/parcels/1')
@@ -64,3 +60,17 @@ class TestParcels(BaseTestClass):
         """ tests the response when there are no parcels for a specific user """
         response = parcel_models.user_specific_parcels(5)
         self.assertEqual(response, 'No Parcels by user 5')
+
+    def test_cancel_parcel(self):
+        """ tests the method that cancels a parcel """
+        response = parcel_models.cancel_parcel(1)
+        canceled = parcel_models.cancel_parcel(2)
+        delivered = parcel_models.cancel_parcel(3)
+        self.assertEqual(delivered, 'This parcel is already delivered, it cannot be canceled')
+        self.assertEqual(response, 'successfully canceled parcel 1'.capitalize())
+        self.assertEqual(canceled, 'The parcel is already canceled')
+
+    def test_cancel_parcel_view(self):
+        """ Test for the response from the cancel parcel view """
+        response = self.client.put('/api/v1/parcels/1/cancel')
+        self.assertEqual(response.status_code, 200)

@@ -25,6 +25,34 @@ class BaseTestClass(unittest.TestCase):
             "title": "Dornish Wine",
             "user_id": 2,
             "weight": 105
+        }, {
+            "bill": 12915,
+            "current_loc": "Kibera",
+            "destination": "gas",
+            "parcel_id": 3,
+            "pick_up": "Kibera",
+            "r_email": "pwanjala@gmail.com",
+            "r_id_no": "30197811",
+            "s_email": "gwiliez@gmail.com",
+            "s_name": " ",
+            "status": "in transit",
+            "title": "Dornish Wine",
+            "user_id": 2,
+            "weight": 105
+        },{
+            "bill": 12915,
+            "current_loc": "Kibera",
+            "destination": "gas",
+            "parcel_id": 2,
+            "pick_up": "Kibera",
+            "r_email": "pwanjala@gmail.com",
+            "r_id_no": "30197811",
+            "s_email": "gwiliez@gmail.com",
+            "s_name": " ",
+            "status": "in transit",
+            "title": "Dornish Wine",
+            "user_id": 2,
+            "weight": 105
         }]
 
     parcel = {

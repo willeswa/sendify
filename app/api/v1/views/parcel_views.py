@@ -58,7 +58,7 @@ class ParcelViews(Resource):
                                                     parcel['r_email'],
                                                     parcel['pick_up'],
                                                     parcel['destination'])
-        return response['message'], 201
+        return response, 201
 
     def get(self):
         """ allows users to retrieve all data """
@@ -76,4 +76,9 @@ class ParcelView(Resource):
     def get(self, parcel_id):
         """ Control method to get a specific parcel """
         response = self.parcel_models.view_order_details(parcel_id)
+        return {'message': response}, 200
+    
+    def put(self, parcel_id):
+        """ updates parcel to canceled"""
+        response = self.parcel_models.cancel_parcel(parcel_id)
         return {'message': response}, 200
