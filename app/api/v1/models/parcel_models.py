@@ -1,4 +1,5 @@
 """ This module holds classes to handle the parcel models methods """
+from flask_restful import abort
 
 parcels = [ {
             "bill": 12915,
@@ -110,3 +111,13 @@ class ParcelModels:
             return user_parcels
         else:
             return 'No Parcels by user {}'.format(user_id)
+        
+    def cancel_parcel(self, parcel_id):
+        result = self.view_order_details(parcel_id)
+        if result['status'] == 'In Transit'.lower():
+            result['status'] == 'Canceled'.lower()
+            return 'Successfully canceled parcel {}'.lower().format(parcel_id)
+        elif result['status'] == 'Delivered'.lower():
+            return 'This parcel is already delivered, it cannot be canceled'
+        else:
+            return 'The parcel is already canceled'

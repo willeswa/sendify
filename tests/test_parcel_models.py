@@ -64,3 +64,13 @@ class TestParcels(BaseTestClass):
         """ tests the response when there are no parcels for a specific user """
         response = parcel_models.user_specific_parcels(5)
         self.assertEqual(response, 'No Parcels by user 5')
+
+    def test_cancel_parcel(self):
+        """ tests the method that cancels a parcel """
+        response = parcel_models.cancel_parcel(2)
+        self.assertEqual(response, 'successfully canceled parcel 2'.lower())
+
+    def test_cancel_parcel_view(self):
+        """ Test for the response from the cancel parcel view """
+        response = self.client.put('/api/v1/parcels/2/cancel')
+        self.assertEqual(response.status_code, 200)

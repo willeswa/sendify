@@ -9,5 +9,6 @@ v1 = Blueprint('version1', __name__, url_prefix='/api/v1')
 api = Api(v1, catch_all_404s=True)
 
 api.add_resource(ParcelViews, '/parcels')
-api.add_resource(ParcelView, '/parcels/<int:parcel_id>')
+api.add_resource(ParcelView, '/parcels/<int:parcel_id>', '/parcels/<int:parcel_id>/cancel')
 api.add_resource(UserView, '/users/<int:user_id>/parcels')
+
