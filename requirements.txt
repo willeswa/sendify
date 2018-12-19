@@ -13,7 +13,6 @@ Flask-RESTful==0.3.6
 Flask-Testing==0.7.1
 funcsigs==1.0.2
 gunicorn==19.9.0
-gyp==0.1
 idna==2.7
 ipaddress==1.0.22
 itsdangerous==1.1.0
