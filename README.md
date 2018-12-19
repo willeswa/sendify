@@ -32,26 +32,18 @@ $ flask run
 
 
 ## Endpoints currently available
-| --------- | ------------------------------------- |-------------------------------------- | ----------------- |
+
 | Method    | Endpoint                              | Description                           | User-type         |
 | --------- | ------------------------------------- |-------------------------------------- | ----------------- |
 |1.POST     | /api/v2/parcels                       | Creates a new parcel order.           | customers         |
-| --------- | ------------------------------------- |-------------------------------------- | ----------------- |
 |2.GET      | /api/v2/parcels                       | Get all parcel orders                 | admin             |
-| --------- | ------------------------------------- |-------------------------------------- | ----------------- |
 |3.GET      | /api/v2/parcels/int                   | Get a specific parcel order           | customers/admin   |
-| --------- | ------------------------------------- |-------------------------------------- | ----------------- |
 |4.PUT      | /api/v2/parcels/int/destination       | Change a parcel's destination         | customers         |
-| --------- | ------------------------------------- |-------------------------------------- | ----------------- |
 |5.PUT      | /api/v2/parcels/int/presentloaction   | changes parcel current location       | admin             |
-| --------- | ------------------------------------- |-------------------------------------- | ----------------- |
 |5.PUT      | /api/v2/parcels/int/status            | changes the status of a parcel        | admin             |
-| --------- | ------------------------------------- |-------------------------------------- | ----------------- |
 |6.GET      | /api/v2/users/int/parcels             | gets parcels by specific users        | customer          |
-| --------- | ------------------------------------- |-------------------------------------- | ----------------- |
 |7.POST     | /api/v2/auth/signup                   | Registers a user to the app           | customers         |
-| --------- | ------------------------------------- |-------------------------------------- | ----------------- |
-|9.POST     | /api/v2/auth/login                    | Logs in a user to the app             | Admin/customer    |  | --------- | ------------------------------------- |-------------------------------------- | ----------------- |
+|9.POST     | /api/v2/auth/login                    | Logs in a user to the app             | Admin/customer    |  
 
 ## How to test the hosted version:
 Heroku app hosted on: 
