@@ -44,8 +44,8 @@ def create_table():
             weight NUMERIC NOT NULL,
             bill NUMERIC NOT NULL,
             user_id integer REFERENCES users (user_id) ON DELETE CASCADE,
-            status VARCHAR DEFAULT 'In Transit',
-            created_on TIMESTAMP DEFAULT NOW()
+            status VARCHAR DEFAULT 'Pending Approval',
+            created_on DATE NOT NULL DEFAULT CURRENT_DATE
         );""",)
 
     conn = init_db()
