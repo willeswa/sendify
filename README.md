@@ -8,7 +8,7 @@ This project shows one of the possible ways to implement RESTful API server.
 
 1. Clone repository.
 
-https://github.com/willeswa/sendify.git
+<a href='https://github.com/willeswa/sendify.git'>sendify repo</a>
 
 #### Create and activate a virtual environment
 
@@ -22,11 +22,9 @@ https://github.com/willeswa/sendify.git
 
 ### Running the application
 
-```
-$ export FLASK_APP="run.py"
-$ export FLASK_ENV="development"
-$ flask run
-```
+    $ export FLASK_APP="run.py"
+    $ export FLASK_ENV="development"
+    $ flask run
 
 #### Open postman and use the below endpoints.
 
