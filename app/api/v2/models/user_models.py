@@ -22,6 +22,7 @@ class UserModels:
         return "Successfully created created account"
 
     def sign_in(self, email, password):
+        """ Checks if user credentials are correct """
         self.email = email
         self.password = password
 
@@ -31,8 +32,8 @@ class UserModels:
         records = curr.fetchall()
         if records[0] == self.email:
             if records[1] == self.password:
-                return 'Login Successful'
+                return 200
             else:
-                return 'Wrong Password!'
+                return 422
         else:
-            return 'Email not registered'
+            return 422
