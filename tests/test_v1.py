@@ -7,7 +7,7 @@ from tests import BaseTestClass
 parcel_models = ParcelModels()
 
 
-class TestParcels(BaseTestClass):
+class TestVersion1(BaseTestClass):
     """ This class holds methods to tests the parcel models methods """
 
     def test_create_parcel(self):
