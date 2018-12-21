@@ -5,11 +5,17 @@ python:
 
 env:
   - FLASK_ENV='testing'
+  - DATABASE_URI='postgres://postgres:star2030@localhost:/testdb_sendify'
+  
 
 install:
   - pip install -r requirements.txt
   - pip install coveralls codecov
   - pip install nose
+
+services:
+  - postgresql
+
 
 script:
   - nosetests --with-coverage --cover-inclusive --cover-package=app

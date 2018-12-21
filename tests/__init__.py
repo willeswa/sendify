@@ -2,6 +2,7 @@
 
 import unittest
 from app import create_app
+from app.db_config import create_table, destroy_tables
 
 
 class BaseTestClass(unittest.TestCase):
@@ -9,9 +10,11 @@ class BaseTestClass(unittest.TestCase):
 
     def setUp(self):
         """ Creates the app and passes the client for testing """
+        destroy_tables()
+        create_table()
         self.app = create_app('testing')
         self.client = self.app.test_client()
-        self.db = [ {
+        self.db = [{
             "bill": 12915,
             "current_loc": "Kibera",
             "destination": "gas",
@@ -39,7 +42,7 @@ class BaseTestClass(unittest.TestCase):
             "title": "Dornish Wine",
             "user_id": 2,
             "weight": 105
-        },{
+        }, {
             "bill": 12915,
             "current_loc": "Kibera",
             "destination": "gas",
