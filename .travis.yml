@@ -14,6 +14,10 @@ install:
 services:
   - postgresql
 
+before_script:
+  - psql -c 'create database db_sendify;' -U postgres
+  - psql -c 'create database testdb_sendify;' -U postgres 
+
 script:
   - nosetests --with-coverage --cover-inclusive --cover-package=app
 
