@@ -9,7 +9,7 @@ class SignupViews(Resource):
     """ controls methods related to user signup """
 
     def __init__(self):
-        self.db = init_db
+        self.db = init_db()
         self.parser = reqparse.RequestParser()
         self.validator = Validator()
         self.user_models = UserModels()
@@ -25,6 +25,31 @@ class SignupViews(Resource):
 
         user = self.parser.parse_args()
         response = self.user_models.create_user(user['name'],
-                                                  user['email'],
-                                                  user['password'])
+                                                user['email'],
+                                                user['password'])
         return {"message": response}, 201
+
+
+class LoginViews(Resource):
+    """ Controls methods related to user login """
+
+    def __init__(self):
+        self.db = init_db()
+        self.parser = reqparse.RequestParser()
+        self.validator = Validator()
+        self.user_models = UserModels()
+
+    def post(self):
+        """ passes user data to the login method """
+        self.parser.add_argument(
+            'email', required=True, type=self.validator.validate_string_fields, help='Enter a valid email')
+        self.parser.add_argument(
+            'password', required=True, type=self.validator.validate_string_fields, help='Password cannot be empty')
+
+        user = self.parser.parse_args()
+        response = self.user_models.sign_in(user['email'],
+                                            user['password'])
+        if response == 200:
+            return {"message": "Show parcels"}, 200
+        else:
+            return {"message": response}, 422

@@ -26,14 +26,14 @@ class UserModels:
         self.email = email
         self.password = password
 
-        query = """ SELECT email, password FROM users """
+        query = """ SELECT email, password FROM users WHERE email = %s """
         curr = self.db.cursor()
-        curr.execute(query)
-        records = curr.fetchall()
-        if records[0] == self.email:
-            if records[1] == self.password:
+        curr.execute(query, (self.email,))
+        record = curr.fetchone()
+        if record and record[0] == self.email:
+            if record[1] == self.password:
                 return 200
             else:
-                return 422
+                return 'Wrong Password!'
         else:
-            return 422
+            return 'Email not registered'
