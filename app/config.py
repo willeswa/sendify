@@ -5,17 +5,19 @@ class Config:
     """ This class defines common variables to all environment """
     SECRET_KEY = 'SOME SUPER SECRET'
     ERROR_404_HELP = False
-    DATABASE_URI = 'postgres://postgres:star2030@localhost:/db_sendify'
+    
 
 
 class TestConfig(Config):
     """ This class defines variables for the testing environment """
     TESTING = True
+    DATABASE_URI = 'postgres://postgres:star2030@localhost:/testdb_sendify'
 
 
 class DevelopmentConfig(Config):
     """ This class defines variables for the development environment """
     DEBUG = True
+    DATABASE_URI = 'postgres://postgres:star2030@localhost:/db_sendify'
 
 
 class ProductionConfig(Config):
