@@ -3,9 +3,10 @@ import os
 # Global imports
 from flask import Flask
 from app.config import app_config
-from app.db_config import create_table, destroy_tables
+from app.db_config import Database
 from dotenv import load_dotenv
 
+db = Database()
 
 def create_app(config_name):
     """ Create the application factory """
@@ -15,8 +16,8 @@ def create_app(config_name):
     app.config.from_pyfile('config.py')
 
     """ create tables """
-    destroy_tables()
-    create_table()
+    db.destroy_tables()
+    db.create_table()
 
     """ import api versions """
     from app.api.v1 import v1

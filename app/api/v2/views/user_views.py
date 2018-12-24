@@ -1,15 +1,16 @@
 """ This module controls user related views """
 from flask_restful import Resource, reqparse
 from app.validators import Validator
-from app.db_config import init_db
+from app.db_config import Database
 from app.api.v2.models.user_models import UserModels
 
+db = Database()
 
 class SignupViews(Resource):
     """ controls methods related to user signup """
 
     def __init__(self):
-        self.db = init_db()
+        self.db = db.init_db()
         self.parser = reqparse.RequestParser()
         self.validator = Validator()
         self.user_models = UserModels()
@@ -34,7 +35,7 @@ class LoginViews(Resource):
     """ Controls methods related to user login """
 
     def __init__(self):
-        self.db = init_db()
+        self.db = db.init_db()
         self.parser = reqparse.RequestParser()
         self.validator = Validator()
         self.user_models = UserModels()

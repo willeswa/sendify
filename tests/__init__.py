@@ -2,7 +2,11 @@
 
 import unittest
 from app import create_app
-from app.db_config import create_table, destroy_tables
+from app.db_config import Database
+from app.api.v2.models.user_models import UserModels
+
+db = Database()
+users = UserModels()
 
 
 class BaseTestClass(unittest.TestCase):
@@ -10,9 +14,10 @@ class BaseTestClass(unittest.TestCase):
 
     def setUp(self):
         """ Creates the app and passes the client for testing """
-        destroy_tables()
-        create_table()
+        db.destroy_tables()
+        db.create_table()
         self.app = create_app('testing')
+        users.create_user("Janet Mugogo", "janet@gmail.com", "pass")
         self.client = self.app.test_client()
         self.db = [{
             "bill": 12915,
@@ -80,4 +85,24 @@ class BaseTestClass(unittest.TestCase):
         'r_email': 'Kagwe@gmail.com',
         'pick_up': 'Kibera',
         'destination': 'Kangemi'
+    }
+    user_data = {
+        "name": "Wanjala Godfrey",
+        "email": "gwiliez@gmail.com",
+        "password": "pass"
+    }
+    empty_user_data = {
+        "name": "",
+        "email": "gwiliez@gmail.com",
+        "password": "pass"
+    }
+
+    login_data = {
+        "email": "janet@gmail.com",
+        "password": "pass"
+    }
+
+    wrong_pass = {
+        "email": "janet@gmail.com",
+        "password": "passw"
     }
