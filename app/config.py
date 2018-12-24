@@ -5,6 +5,7 @@ class Config:
     """ This class defines common variables to all environment """
     SECRET_KEY = 'SOME SUPER SECRET'
     ERROR_404_HELP = False
+    
 
 
 class TestConfig(Config):
