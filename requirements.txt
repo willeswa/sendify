@@ -13,7 +13,6 @@ Flask-RESTful==0.3.6
 Flask-Testing==0.7.1
 funcsigs==1.0.2
 gunicorn==19.9.0
-gyp==0.1
 idna==2.7
 ipaddress==1.0.22
 itsdangerous==1.1.0
@@ -33,8 +32,6 @@ psycopg2==2.7.3.2
 py==1.7.0
 pycodestyle==2.4.0
 pycparser==2.19
-pycrypto==2.6.1
-pygobject==3.26.1
 PyJWT==1.6.4
 pytest==4.0.1
 python-dotenv==0.10.0
