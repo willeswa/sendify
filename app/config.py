@@ -1,10 +1,15 @@
 """ This modules holds classes for different environment config """
+import os
+
+
+# secret_key = os.getenv('SECRET_KEY')
 
 
 class Config:
     """ This class defines common variables to all environment """
-    SECRET_KEY = 'SOME SUPER SECRET'
     ERROR_404_HELP = False
+    SECRET_KEY='i like my women tall and bulky'
+    JWT_SECRET_KEY='i said i like my women tall and bulky'
     
 
 

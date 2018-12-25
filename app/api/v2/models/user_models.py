@@ -1,5 +1,6 @@
 """ This module holds classes that handle users methods """
 from app.db_config import Database
+from flask_jwt_extended import create_access_token
 
 
 db = Database()
@@ -28,12 +29,14 @@ class UserModels:
 
         with db as conn:
             curr = conn.cursor()
-            query = """ SELECT email, password FROM users WHERE email = %s """
+            query = """ SELECT email, password, name, admin FROM users WHERE email = %s """
             curr.execute(query, (self.email,))
             record = curr.fetchone()
             if record and record[0] == self.email:
                 if record[1] == self.password:
-                    return 200
+                    access_token = create_access_token(
+                        {'name': record[2], 'email': email, 'admin': record[3]})
+                    return access_token
                 else:
                     return 'Wrong Password!'
             else:

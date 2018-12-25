@@ -12,13 +12,15 @@ else:
 
 
 class Database:
-    """ Handles database connection """
+    """ Handles database connection using context manager"""
 
     def __enter__(self):
+        """ Defines the entry point for the connection """
         self.conn = psycopg2.connect(uri)
         return self.conn
 
     def __exit__(self, exc_type, exc_val, traceback):
+        """ Defines the actions before exit """
         self.conn.close()
 
     def connection(self, uri):
