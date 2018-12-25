@@ -10,15 +10,15 @@ users = UserModels()
 
 
 class BaseTestClass(unittest.TestCase):
-    """ This class sets methods that are common to all test class """
+    """ This class sets methods and define data common to all test class """
 
     def setUp(self):
         """ Creates the app and passes the client for testing """
         db.destroy_tables()
         db.create_table()
         self.app = create_app('testing')
-        users.create_user("Janet Mugogo", "janet@gmail.com", "pass")
         self.client = self.app.test_client()
+        users.create_user("Janet Mugogo", "janet@gmail.com", "pass")
         self.db = [{
             "bill": 12915,
             "current_loc": "Kibera",

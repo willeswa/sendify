@@ -50,7 +50,4 @@ class LoginViews(Resource):
         user = self.parser.parse_args()
         response = self.user_models.sign_in(user['email'],
                                             user['password'])
-        if response == 200:
-            return {"message": "Show parcels"}, 200
-        else:
-            return {"message": response}, 422
+        return {"message": response}
