@@ -29,12 +29,12 @@ class TestVersion2(BaseTestClass):
     def test_non_user(self):
         """ test the method that signs in users """
         response = user_models.sign_in("jnature@gmail.com", "somepass")
-        self.assertEqual(response, 'Email not registered')
+        self.assertEqual(response, 'Email is not registered')
 
     def test_wrong_entries(self):
         """ tests user reponse for wrong inforation """
         response = user_models.sign_in('janet@gmail.com', "pas")
-        self.assertEqual(response, "Wrong Password!")
+        self.assertEqual(response, "Incorrect Password!")
 
     def test_create_user_view(self):
         """ tests the view for creating user """
@@ -56,3 +56,15 @@ class TestVersion2(BaseTestClass):
                                     data=json.dumps(self.wrong_pass),
                                     content_type='application/json')
         self.assertEqual(response.status_code, 200)
+
+    # def test_parcel_data_validation(self):
+    #     """ tests if the data is correctly validated """
+    #     response = self.client.post('/api/v2/parcels',
+    #                                 data=json.dumps(self.empty_parcel2),
+    #                                 content_type='application/json')
+    #     self.assertEqual(response.status_code, 400)
+
+    # def test_data_association(self):
+    #     """ tests response for a wrong password """
+    #     response = user_models.sign_in("janet@gmail.com", "pass")
+    #     self.assertEqual(response['user_id'], 1)

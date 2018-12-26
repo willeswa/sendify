@@ -51,9 +51,9 @@ class Database:
                 address VARCHAR NOT NULL,
                 postal_code VARCHAR NOT NULL,
                 pick_up VARCHAR NOT NULL,
-                current_location VARCHAR NOT NULL,
-                weight NUMERIC NOT NULL,
-                bill NUMERIC NOT NULL,
+                current_location VARCHAR DEFAULT 'Collection Center',
+                weight NUMERIC(5, 2) NOT NULL,
+                bill NUMERIC(10, 2) NOT NULL,
                 user_id integer REFERENCES users (user_id) ON DELETE CASCADE,
                 status VARCHAR DEFAULT 'Pending Approval',
                 created_on DATE NOT NULL DEFAULT CURRENT_DATE

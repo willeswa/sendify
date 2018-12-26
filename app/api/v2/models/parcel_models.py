@@ -12,9 +12,9 @@ class ParcelModels:
     def create_parcel(self, title, rec_name, rec_email, address, postal_code, pick_up, weight):
         """ creates a new parcel and inserts it into the db """
         current_user = get_jwt_identity()
-        s_email = current_user[2]
-        s_name = current_user[0]
-        user_id = current_user[1]
+        s_email = current_user['email']
+        s_name = current_user['name']
+        user_id = current_user['user_id']
         self.title = title
         self.rec_name = rec_name
         self.rec_email = rec_email
@@ -25,24 +25,70 @@ class ParcelModels:
         self.sender_name = s_name
         self.sender_email = s_email
         self.user_id = user_id
-        self.current_location = self.pick_up
         self.bill = 150 + (self.weight*100)
 
         with db as conn:
             query = """INSERT INTO parcels(title, sender_name, sender_email, rec_name, rec_email,
-                        address, postal_code, pick_up, current_location, weight, bill, user_id)
-                        VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+                        address, postal_code, pick_up, weight, bill, user_id)
+                        VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
             curr = conn.cursor()
             curr.execute(query, (self.title, self.sender_name, self.sender_email, self.rec_name, self.rec_email,
-                                 self.address, self.postal_code, self.pick_up, self.current_location, self.weight, self.bill, self.user_id))
+                                 self.address, self.postal_code, self.pick_up, self.weight, self.bill, self.user_id))
             conn.commit()
 
-    # def get_all_parcels(self):
-    #     """ allows users to get all data  """
-    #     if len(self.db) == 0:
-    #         return 'You have no existing parcels'
-    #     else:
-    #         return self.db
+        return 'Successfuly created parcel'
+
+    def get_all_parcels(self):
+        """ allows users to get all data  """
+
+        current_user = get_jwt_identity()
+        with db as conn:
+            curr = conn.cursor()
+            if current_user['admin']:
+                query = """ SELECT title, sender_name, sender_email, rec_name, rec_email, address, postal_code, 
+                        pick_up, current_location, weight, bill, status, created_on FROM parcels """
+                columns = ('title', 'sender_name', 'sender_email', 'rec_name', 'rec_email', 'address', 'postal_code',
+                           'pick_up', 'current_location', 'weight', 'bill', 'status', 'created_on')
+                curr.execute(query)
+                records = curr.fetchall()
+                if records:
+                    parcels = []
+                    for record in records:
+                        values = []
+                        for value in record:
+                            values.append(str(value))
+                        parcels.append(dict(zip(columns, values)))
+                    return parcels
+                else:
+                    return 'There are 0 parcels at the moment'
+            else:
+                return 'Not authorize to view this page'
+
+    def get_user_specific_parcels(self, user_id):
+        """ allows retrieval of user specific parcels """
+        current_user = get_jwt_identity()
+        if user_id == current_user['user_id']:
+            with db as conn:
+                curr = conn.cursor()
+                query = """ SELECT title, rec_name, rec_email, address, postal_code, pick_up, current_location, 
+                        weight, bill, status, created_on FROM parcels WHERE user_id = %s """
+                columns = ('title', 'rec_name', 'rec_email', 'address', 'postal_code', 'pick_up', 'current_location',
+                           'weight', 'bill', 'status', 'created_on')
+                curr.execute(query, (user_id,),)
+                records = curr.fetchall()
+                if records:
+                    parcels = []
+                    values = []
+                    for record in records:
+                        for value in record:
+                            values.append(str(value))
+                        parcels.append(dict(zip(columns, values)))
+                    return parcels
+                else:
+                    return 'You have 0 parcels at the moment'
+        else:
+            return 'Not authorized to view this page'
+
 
 #     # def view_order_details(self, parcel_id):
 #     #     """ retrieves a specific parcel """
@@ -60,16 +106,16 @@ class ParcelModels:
 
 #     #     abort(404, message='Parcel with ID {} does not exist'.format(parcel_id))
 
-#     def user_specific_parcels(self, user_id):
-#         """ Retrieves parcels that are for a specific user """
-#         user_parcels = []
-#         for parcel in self.db:
-#             if parcel['user_id'] == user_id:
-#                 user_parcels.append(parcel)
-#         if user_parcels:
-#             return user_parcels
-#         else:
-#             return 'No Parcels by user {}'.format(user_id)
+    # def user_specific_parcels(self, user_id):
+    #     """ Retrieves parcels that are for a specific user """
+    #     user_parcels = []
+    #     for parcel in self.db:
+    #         if parcel['user_id'] == user_id:
+    #             user_parcels.append(parcel)
+    #     if user_parcels:
+    #         return user_parcels
+    #     else:
+    #         return 'No Parcels by user {}'.format(user_id)
 
 #     # def cancel_parcel(self, parcel_id):
 #     #     result = self.view_order_details(parcel_id)

@@ -11,35 +11,37 @@ class UserModels:
 
     def create_user(self, name, email, password):
         """ creates user and saves to db """
-        self.name = name
-        self.email = email
-        self.password = password
-
-        with db as conn:
-            curr = conn.cursor()
-            query = """ INSERT INTO users (email, name, password) VALUES (%s, %s, %s)"""
-            curr.execute(query, (self.email, self.name, self.password))
-            conn.commit()
+        if self.check_if_user_exist(email):
+            return 'Email already registered'
+        else:
+            with db as conn:
+                curr = conn.cursor()
+                query = """ INSERT INTO users (email, name, password) VALUES (%s, %s, %s)"""
+                curr.execute(query, (email, name, password))
+                conn.commit()
             return "Successfully created created account"
 
     def sign_in(self, email, password):
         """ Checks if user credentials are correct """
-        self.email = email
-        self.password = password
-
-        with db as conn:
-            curr = conn.cursor()
-            query = """ SELECT email, password, name, admin, user_id FROM users WHERE email = %s """
-            curr.execute(query, (self.email,))
-            record = curr.fetchone()
-            if record and record[0] == self.email:
-                if record[1] == self.password:
+        if self.check_if_user_exist(email):
+            with db as conn:
+                curr = conn.cursor()
+                query = """ SELECT * FROM users WHERE email = %s """
+                curr.execute(query, (email,))
+                record = curr.fetchone()
+                if record[3] == password:
                     access_token = create_access_token(
-                        {'name': record[2], 'user_id':record[4], 'email': self.email, 'admin': record[3]})
+                        {'name': record[2], 'user_id': record[0], 'email': email, 'admin': record[4]})
                     return access_token
                 else:
-                    return 'Wrong Password!'
-            else:
-                return 'Email not registered'
-            
-    
+                    return 'Incorrect Password!'
+        else:
+            return 'Email is not registered'
+
+    def check_if_user_exist(self, email):
+        with db as conn:
+            query = """ SELECT EXISTS (SELECT * FROM users where email = %s) """
+            curr = conn.cursor()
+            curr.execute(query, (email,))
+            exists = curr.fetchone()
+            return exists[0]
