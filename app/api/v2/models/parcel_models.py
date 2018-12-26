@@ -89,41 +89,32 @@ class ParcelModels:
         else:
             return 'Not authorized to view this page'
 
-
-#     # def view_order_details(self, parcel_id):
-#     #     """ retrieves a specific parcel """
-#     #     if self.db:
-#     #         result = self.check_if_parcel_id_exists(parcel_id)
-#     #         return result
-#     #     else:
-#     #         return 'You have no existing parcels'
-
-#     # def check_if_parcel_id_exists(self, parcel_id):
-#     #     """ Checks if a parcel with the given parcel id exists """
-#     #     for parcel in self.db:
-#     #         if parcel['parcel_id'] == parcel_id:
-#     #             return parcel
-
-#     #     abort(404, message='Parcel with ID {} does not exist'.format(parcel_id))
-
-    # def user_specific_parcels(self, user_id):
-    #     """ Retrieves parcels that are for a specific user """
-    #     user_parcels = []
-    #     for parcel in self.db:
-    #         if parcel['user_id'] == user_id:
-    #             user_parcels.append(parcel)
-    #     if user_parcels:
-    #         return user_parcels
+    # def view_order_details(self, parcel_id):
+    #     """ retrieves a specific parcel """
+    #     if self.db:
+    #         result = self.check_if_parcel_id_exists(parcel_id)
+    #         return result
     #     else:
-    #         return 'No Parcels by user {}'.format(user_id)
+    #         return 'You have no existing parcels'
 
-#     # def cancel_parcel(self, parcel_id):
-#     #     result = self.view_order_details(parcel_id)
-#     #     if result['status'] == 'In transit':
-#     #         result['status'] = 'Canceled'
-#     #         print(result)
-#     #         return 'Successfully canceled parcel {}'.format(parcel_id)
-#     #     elif result['status'] == 'Delivered':
-#     #         return 'This parcel is already delivered, it cannot be canceled'
-#     #     else:
-#     #         return 'The parcel is already canceled'
+    def check_if_parcel_id_exists(self, parcel_id):
+        """ Checks if a parcel with the given parcel id exists """
+        with db as conn:
+            query = """ SELECT EXISTS (SELECT * FROM users where parcel_id = %s RETURNING status, address, current_location) """
+            curr = conn.cursor()
+            curr.execute(query, (parcel_id,))
+            exists = curr.fetchone()
+            return exists
+
+    # def cancel_parcel(self, parcel_id, status):
+    #     exists = self.check_if_parcel_id_exists(parcel_id)
+    #     query = """ UPDATE parcels SET  status = %s """
+    #     if exists[0]:
+    #         with db as conn:
+    #             if exists[1] == status:
+    #                 return 'Already {}ed'.format(status)
+    #             else:
+    #                 curr = conn.cursor()
+    #                 curr.execute(query, (status,),)
+    #     else:
+    #         return 'No parcel with id #{}'.format(parcel_id)
