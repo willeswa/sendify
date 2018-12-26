@@ -4,9 +4,11 @@ import unittest
 from app import create_app
 from app.db_config import Database
 from app.api.v2.models.user_models import UserModels
+from app.api.v2.views.user_views import LoginViews
 
 db = Database()
 users = UserModels()
+user_views = LoginViews()
 
 
 class BaseTestClass(unittest.TestCase):
@@ -62,7 +64,6 @@ class BaseTestClass(unittest.TestCase):
             "user_id": 2,
             "weight": 105
         }]
-
     parcel = {
         'user_id': 1,
         'title': 'Dornish Wine',
@@ -85,6 +86,15 @@ class BaseTestClass(unittest.TestCase):
         'r_email': 'Kagwe@gmail.com',
         'pick_up': 'Kibera',
         'destination': 'Kangemi'
+    }
+    empty_parcel2 = {
+        "title": "",
+        "weight": 35,
+        "rec_name": "Sharon Adhiambo",
+        "rec_email": "shazz@gmail.com",
+        "address": "Lumumba Dr.",
+        "postal_code": "00517",
+        "pick_up": ""
     }
     user_data = {
         "name": "Wanjala Godfrey",

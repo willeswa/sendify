@@ -22,7 +22,7 @@ def create_app(config_name):
     JWTManager(app)
 
     """ create tables """
-    db.destroy_tables()
+    # db.destroy_tables()
     db.create_table()
 
     """ import api versions """
