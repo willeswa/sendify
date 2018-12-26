@@ -1,50 +1,48 @@
-# """ This module holds classes to handle the parcel models methods """
-# from flask_restful import abort
-# from app.db_config import Database
+""" This module holds classes to handle the parcel models methods """
+from flask_restful import abort
+from app.db_config import Database
+from flask_jwt_extended import get_jwt_identity
 
-# db = Database()
+db = Database()
 
 
-# class ParcelModels:
-#     """ This class contains methods that handle parcels """
+class ParcelModels:
+    """ This class contains methods that handle parcels """
 
-#     def __init__(self):
-#         self.db = db
+    def create_parcel(self, title, rec_name, rec_email, address, postal_code, pick_up, weight):
+        """ creates a new parcel and inserts it into the db """
+        current_user = get_jwt_identity()
+        s_email = current_user[2]
+        s_name = current_user[0]
+        user_id = current_user[1]
+        self.title = title
+        self.rec_name = rec_name
+        self.rec_email = rec_email
+        self.address = address
+        self.postal_code = postal_code
+        self.pick_up = pick_up
+        self.weight = weight
+        self.sender_name = s_name
+        self.sender_email = s_email
+        self.user_id = user_id
+        self.current_location = self.pick_up
+        self.bill = 150 + (self.weight*100)
 
-# #     def create_parcel(self, title, rec_name, rec_email, address, postal_code, pick_up, weight):
-# #         """ creates a new parcel and inserts it into the db """
+        with db as conn:
+            query = """INSERT INTO parcels(title, sender_name, sender_email, rec_name, rec_email,
+                        address, postal_code, pick_up, current_location, weight, bill, user_id)
+                        VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+            curr = conn.cursor()
+            curr.execute(query, (self.title, self.sender_name, self.sender_email, self.rec_name, self.rec_email,
+                                 self.address, self.postal_code, self.pick_up, self.current_location, self.weight, self.bill, self.user_id))
+            conn.commit()
 
-# #         s_name = 'Willies Wanjala'
-# #         s_email = 'gwiliez@gmail.com'
-# #         user_id = 1
-# #         self.title = title
-# #         self.rec_name = rec_name
-# #         self.rec_email = rec_email
-# #         self.address = address
-# #         self.postal_code = postal_code
-# #         self.pick_up = pick_up
-# #         self.weight = weight
-# #         self.sender_name = s_name
-# #         self.sender_email = s_email
-# #         self.user_id = user_id
-# #         self.current_location = self.pick_up
-# #         self.bill = 150 + (self.weight*100)
-
-# #         query = """INSERT INTO parcels(title, sender_name, sender_email, rec_name, rec_email,
-# #                     address, postal_code, pick_up, current_location, weight, bill, user_id)
-# #                     VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
-# #         curr = self.db.cursor()
-# #         curr.execute(query, (self.title, self.sender_name, self.sender_email, self.rec_name, self.rec_email,
-# #                              self.address, self.postal_code, self.pick_up, self.current_location, self.weight, self.bill, self.user_id))
-# #         self.db.commit()
-# #         return {'message': 'Successfully created parcel'}
-
-#     def get_all_parcels(self):
-#         """ allows users to get all data  """
-#         if len(self.db) == 0:
-#             return 'You have no existing parcels'
-#         else:
-#             return self.db
+    # def get_all_parcels(self):
+    #     """ allows users to get all data  """
+    #     if len(self.db) == 0:
+    #         return 'You have no existing parcels'
+    #     else:
+    #         return self.db
 
 #     # def view_order_details(self, parcel_id):
 #     #     """ retrieves a specific parcel """

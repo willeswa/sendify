@@ -29,15 +29,17 @@ class UserModels:
 
         with db as conn:
             curr = conn.cursor()
-            query = """ SELECT email, password, name, admin FROM users WHERE email = %s """
+            query = """ SELECT email, password, name, admin, user_id FROM users WHERE email = %s """
             curr.execute(query, (self.email,))
             record = curr.fetchone()
             if record and record[0] == self.email:
                 if record[1] == self.password:
                     access_token = create_access_token(
-                        {'name': record[2], 'email': email, 'admin': record[3]})
+                        {'name': record[2], 'user_id':record[4], 'email': self.email, 'admin': record[3]})
                     return access_token
                 else:
                     return 'Wrong Password!'
             else:
                 return 'Email not registered'
+            
+    
