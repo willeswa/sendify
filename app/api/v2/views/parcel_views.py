@@ -68,6 +68,12 @@ class ParcelView(Resource):
         response = parcel_models.cancel_parcel(parcel_id, parcel['status'])
         return {"message": response}
 
+    @jwt_required
+    def get(self, parcel_id):
+        """ gets a specific parcel """
+        response = parcel_models.view_order_details(parcel_id)
+        return {'message': response}
+
 
 class ChangeeAddress(Resource):
     """ Methods that control address updates """
@@ -85,7 +91,8 @@ class ChangeeAddress(Resource):
 
         parcel = self.parser.parse_args()
 
-        response = parcel_models.change_address(parcel_id, parcel['address'], parcel['postal_code'])
+        response = parcel_models.change_address(
+            parcel_id, parcel['address'], parcel['postal_code'])
         return {"message": response}
 
 
@@ -103,5 +110,6 @@ class ChangeCurrentLocation(Resource):
 
         parcel = self.parser.parse_args()
 
-        response = parcel_models.change_current_location(parcel_id, parcel['current_location'])
+        response = parcel_models.change_current_location(
+            parcel_id, parcel['current_location'])
         return {"message": response}
