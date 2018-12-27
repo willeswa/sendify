@@ -106,15 +106,15 @@ class ParcelModels:
             exists = curr.fetchone()
             return exists
 
-    # def cancel_parcel(self, parcel_id, status):
-    #     exists = self.check_if_parcel_id_exists(parcel_id)
-    #     query = """ UPDATE parcels SET  status = %s """
-    #     if exists[0]:
-    #         with db as conn:
-    #             if exists[1] == status:
-    #                 return 'Already {}ed'.format(status)
-    #             else:
-    #                 curr = conn.cursor()
-    #                 curr.execute(query, (status,),)
-    #     else:
-    #         return 'No parcel with id #{}'.format(parcel_id)
+    def cancel_parcel(self, parcel_id, status):
+        exists = self.check_if_parcel_id_exists(parcel_id)
+        query = """ UPDATE parcels SET  status = %s """
+        if exists[0]:
+            with db as conn:
+                if exists[1] == status:
+                    return 'Already {}ed'.format(status)
+                else:
+                    curr = conn.cursor()
+                    curr.execute(query, (status,),)
+        else:
+            return 'No parcel with id #{}'.format(parcel_id)
