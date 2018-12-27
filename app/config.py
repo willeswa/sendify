@@ -22,7 +22,8 @@ class TestConfig(Config):
 class DevelopmentConfig(Config):
     """ This class defines variables for the development environment """
     DEBUG = True
-    DATABASE_URI = 'postgres://postgres:star2030@localhost:/db_sendify'
+    DATABASE_URI = 'postgresql-rectangular-91541'
+    # DATABASE_URI = 'postgres://postgres:star2030@localhost:/db_sendify'
 
 
 class ProductionConfig(Config):
