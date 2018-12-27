@@ -100,21 +100,27 @@ class ParcelModels:
     def check_if_parcel_id_exists(self, parcel_id):
         """ Checks if a parcel with the given parcel id exists """
         with db as conn:
-            query = """ SELECT EXISTS (SELECT * FROM users where parcel_id = %s RETURNING status, address, current_location) """
+            query = """ SELECT EXISTS (SELECT * FROM parcels WHERE parcel_id = %s) """
             curr = conn.cursor()
             curr.execute(query, (parcel_id,))
             exists = curr.fetchone()
             return exists
 
-    # def cancel_parcel(self, parcel_id, status):
-    #     exists = self.check_if_parcel_id_exists(parcel_id)
-    #     query = """ UPDATE parcels SET  status = %s """
-    #     if exists[0]:
-    #         with db as conn:
-    #             if exists[1] == status:
-    #                 return 'Already {}ed'.format(status)
-    #             else:
-    #                 curr = conn.cursor()
-    #                 curr.execute(query, (status,),)
-    #     else:
-    #         return 'No parcel with id #{}'.format(parcel_id)
+    def cancel_parcel(self, parcel_id, status):
+        exists = self.check_if_parcel_id_exists(parcel_id)
+        query = """ UPDATE parcels SET  status = %s WHERE parcel_id = %s"""
+        if exists[0]:
+            with db as conn:
+                curr = conn.cursor()
+                query1 = """ SELECT status FROM parcels WHERE parcel_id = %s  """
+                curr.execute(query1, (parcel_id,),)
+                current_status = curr.fetchone()
+                print(current_status[0])
+                if current_status[0] == status or current_status[0] == 'Delivered':
+                    return 'Parcel already {}!'.format(current_status[0])
+                else:
+                    curr.execute(query, (status, parcel_id),)
+                    conn.commit()
+                    return 'Successfully updated status of parcel {}'.format(parcel_id)
+        else:
+            return 'No parcel with id #{}'.format(parcel_id)

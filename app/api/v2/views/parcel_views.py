@@ -15,11 +15,11 @@ class ParcelViews(Resource):
 
     def __init__(self):
         self.validators = Validator()
+        self.parser = reqparse.RequestParser()
 
     @jwt_required
     def post(self):
         """ retrieves all parcels in the """
-        self.parser = reqparse.RequestParser()
         self.parser.add_argument(
             'title', required=True, type=self.validators.validate_string_fields, help='Must provide a value', location='json')
         self.parser.add_argument(
@@ -48,4 +48,22 @@ class ParcelViews(Resource):
     def get(self):
         """ Controls method to retrieve all parcels """
         response = parcel_models.get_all_parcels()
+        return {"message": response}
+
+
+class ParcelView(Resource):
+    """ Handles routes to manipute specific orders """
+
+    def __init__(self):
+        self.validators = Validator()
+        self.parser = reqparse.RequestParser()
+
+    @jwt_required
+    def put(self, parcel_id):
+        """ updates the status of a parcel appropriately """
+        self.parser.add_argument(
+            'status', required=True, type=self.validators.validate_string_fields, help='Must provide status', location='json')
+        parcel = self.parser.parse_args()
+
+        response = parcel_models.cancel_parcel(parcel_id, parcel['status'])
         return {"message": response}
