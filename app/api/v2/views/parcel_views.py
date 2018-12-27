@@ -87,3 +87,21 @@ class ChangeeAddress(Resource):
 
         response = parcel_models.change_address(parcel_id, parcel['address'], parcel['postal_code'])
         return {"message": response}
+
+
+class ChangeCurrentLocation(Resource):
+    """ Methods that control address updates """
+
+    def __init__(self):
+        self.validators = Validator()
+        self.parser = reqparse.RequestParser()
+
+    @jwt_required
+    def put(self, parcel_id):
+        self.parser.add_argument(
+            'current_location', required=True, type=self.validators.validate_string_fields, help='Must provide new address', location='json')
+
+        parcel = self.parser.parse_args()
+
+        response = parcel_models.change_current_location(parcel_id, parcel['current_location'])
+        return {"message": response}
