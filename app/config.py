@@ -28,7 +28,7 @@ class DevelopmentConfig(Config):
 class ProductionConfig(Config):
     """ This class defines variables for the production environment """
     DEBUG = False
-
+    DATABASE_URI = 'postgresql-rectangular-91541'
 
 app_config = {
     'testing': TestConfig,
