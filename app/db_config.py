@@ -6,9 +6,9 @@ from psycopg2 import Error
 
 env = os.getenv('FLASK_ENV')
 if env:
-    uri = app_config[env].DATABASE_URI
+    url = app_config[env].DATABASE_URL
 else:
-    uri = "host='localhost' dbname='testdb_sendify' user='postgres' password='star2030'"
+    url = "host='localhost' dbname='testdb_sendify' user='postgres' password='star2030'"
 
 
 class Database:
@@ -16,20 +16,20 @@ class Database:
 
     def __enter__(self):
         """ Defines the entry point for the connection """
-        self.conn = psycopg2.connect(uri)
+        self.conn = psycopg2.connect(url)
         return self.conn
 
     def __exit__(self, exc_type, exc_val, traceback):
         """ Defines the actions before exit """
         self.conn.close()
 
-    def connection(self, uri):
+    def connection(self, url):
         with Database() as conn:
             return conn
 
     def init_db(self):
-        """ provides an entry point for the uri """
-        conn = self.connection(uri)
+        """ provides an entry point for the url """
+        conn = self.connection(url)
         return conn
 
     def create_table(self):
