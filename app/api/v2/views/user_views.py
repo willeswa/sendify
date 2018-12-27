@@ -70,6 +70,3 @@ class UserView(Resource):
         """ calls the method to retrieve user specific parcels """
         response = parcel_models.get_user_specific_parcels(user_id)
         return {"message": response}
-
-    def put(self, parcel_id):
-        """ update parcel status """
