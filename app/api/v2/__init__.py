@@ -14,6 +14,6 @@ api.add_resource(LoginViews, '/auth/login')
 api.add_resource(ParcelViews, '/parcels')
 api.add_resource(UserView, '/users/<int:user_id>/parcels')
 api.add_resource(ParcelView, '/parcels/<int:parcel_id>/changestatus', '/parcels/<int:parcel_id>')
-api.add_resource(ChangeeAddress, '/parcels/<int:parcel_id>/changeaddress')
-api.add_resource(ChangeCurrentLocation, '/parcels/<int:parcel_id>/changecurrentlocation')
+api.add_resource(ChangeeAddress, '/parcels/<int:parcel_id>/address')
+api.add_resource(ChangeCurrentLocation, '/parcels/<int:parcel_id>/currentlocation')
 
