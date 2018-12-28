@@ -5,7 +5,11 @@ import psycopg2
 from psycopg2 import Error
 
 env = os.getenv('FLASK_ENV')
-url = app_config[env].DATABASE_URL
+if env:
+    url = app_config[env].DATABASE_URL
+    print(url)
+else:
+    url = "host='localhost' dbname='testdb_sendify' user='postgres' password='star2030'"
 
 
 class Database:
